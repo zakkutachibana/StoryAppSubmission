@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">StoryAppSubmission</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="name">Name</string>
+    <string name="signup">Sign Up</string>
+    <string name="tv_to_login">Sudah Punya Akun? Login disini</string>
+    <string name="login">Login</string>
+    <string name="logo_app">Logo App</string>
+    <string name="empty_name">Nama tidak boleh Kosong!</string>
+    <string name="empty_email">Email tidak boleh kosong!</string>
+    <string name="empty_password">Password tidak boleh kosong!</string>
+    <string name="success">Sukses</string>
+    <string name="ok">OK</string>
+    <string name="success_registration">Registrasi Berhasil!</string>
+</resources>
