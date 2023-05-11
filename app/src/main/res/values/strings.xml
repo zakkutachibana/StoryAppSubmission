@@ -13,4 +13,5 @@
     <string name="success">Sukses</string>
     <string name="ok">OK</string>
     <string name="success_registration">Registrasi Berhasil!</string>
+    <string name="greeting">Halo, %1$s !</string>
 </resources>

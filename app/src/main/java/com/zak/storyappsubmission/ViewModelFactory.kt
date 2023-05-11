@@ -2,7 +2,9 @@ package com.zak.storyappsubmission
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+
 import com.zak.storyappsubmission.ui.login.LoginViewModel
+import com.zak.storyappsubmission.ui.main.MainViewModel
 import com.zak.storyappsubmission.ui.signup.SignupViewModel
 
 class ViewModelFactory(private val pref: UserPreference) : ViewModelProvider.NewInstanceFactory() {
@@ -10,9 +12,9 @@ class ViewModelFactory(private val pref: UserPreference) : ViewModelProvider.New
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
-//            modelClass.isAssignableFrom(MainViewModel::class.java) -> {
-//                MainViewModel(pref) as T
-//            }
+            modelClass.isAssignableFrom(MainViewModel::class.java) -> {
+                MainViewModel(pref) as T
+            }
             modelClass.isAssignableFrom(SignupViewModel::class.java) -> {
                 SignupViewModel(pref) as T
             }

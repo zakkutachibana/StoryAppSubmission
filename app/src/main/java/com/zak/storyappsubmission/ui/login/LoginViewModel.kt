@@ -1,8 +1,6 @@
 package com.zak.storyappsubmission.ui.login
 
-import android.util.JsonToken
 import android.util.Log
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,6 +13,7 @@ import retrofit2.Response
 import androidx.lifecycle.viewModelScope
 import com.zak.storyappsubmission.UserModel
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 class LoginViewModel(private val pref: UserPreference) : ViewModel() {
     companion object{
@@ -24,17 +23,21 @@ class LoginViewModel(private val pref: UserPreference) : ViewModel() {
     private val _loginStatus = MutableLiveData<LoginResponse>()
     val loginStatus: LiveData<LoginResponse> = _loginStatus
 
+    val error = MutableLiveData("")
+
     fun postLogin(email: String, password: String) {
         val client = ApiConfig.getApiService().postLogin(email, password)
         client.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
-                    _loginStatus.value = response.body()
-                    val userId = response.body()?.loginResult?.userId
-                    saveUser(userId, )
+                    _loginStatus.postValue(response.body())
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
-                    _loginStatus.value = response.body()
+                    response.errorBody()?.let {
+                        val errorResponse = JSONObject(it.string())
+                        val errorMessages = errorResponse.getString("message")
+                        error.postValue(errorMessages)
+                    }
                 }
             }
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
@@ -43,18 +46,17 @@ class LoginViewModel(private val pref: UserPreference) : ViewModel() {
         })
     }
 
-     fun saveUser(userId : String, email: String, password: String, name: String, token: String) {
-         viewModelScope.launch {
-             pref.saveUser(
-                 UserModel(
-                     userId,
-                     email,
-                     password,
-                     networkSignIn.loginResult.name,
-                     networkSignIn.loginResult.token,
-                     true
-                 )
-             )
-         }
+    fun setUserPreference(userId: String, name: String, token: String) {
+        viewModelScope.launch {
+            pref.saveUser(
+                UserModel(
+                    userId,
+                    name,
+                    token,
+                    true
+                )
+            )
+        }
     }
+
 }
