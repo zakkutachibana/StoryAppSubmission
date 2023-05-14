@@ -8,7 +8,6 @@ import com.zak.storyappsubmission.ui.main.MainViewModel
 import com.zak.storyappsubmission.ui.signup.SignupViewModel
 
 class ViewModelFactory(private val pref: UserPreference) : ViewModelProvider.NewInstanceFactory() {
-
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {

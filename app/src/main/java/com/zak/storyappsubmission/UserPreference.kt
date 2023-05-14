@@ -30,15 +30,9 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         }
     }
 
-    suspend fun login() {
-        dataStore.edit { preferences ->
-            preferences[STATE_KEY] = true
-        }
-    }
-
     suspend fun logout() {
         dataStore.edit { preferences ->
-            preferences[STATE_KEY] = false
+            preferences.clear()
         }
     }
 

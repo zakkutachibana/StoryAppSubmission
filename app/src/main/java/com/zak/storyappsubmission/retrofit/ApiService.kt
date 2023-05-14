@@ -22,4 +22,9 @@ interface ApiService {
         @Field("email") email: String,
         @Field("password") password: String
     ): Call<LoginResponse>
+
+    @GET("stories")
+    fun getStories(
+        @Header("Authorization") token: String,
+    ): Call<StoryResponse>
 }

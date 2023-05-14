@@ -17,18 +17,23 @@ import org.json.JSONObject
 
 class LoginViewModel(private val pref: UserPreference) : ViewModel() {
     companion object{
-        private const val TAG = "SignupViewModel"
+        private const val TAG = "LoginViewModel"
     }
 
     private val _loginStatus = MutableLiveData<LoginResponse>()
     val loginStatus: LiveData<LoginResponse> = _loginStatus
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
     val error = MutableLiveData("")
 
     fun postLogin(email: String, password: String) {
+        _isLoading.value = true
         val client = ApiConfig.getApiService().postLogin(email, password)
         client.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                _isLoading.value = false
                 if (response.isSuccessful) {
                     _loginStatus.postValue(response.body())
                 } else {
@@ -42,6 +47,7 @@ class LoginViewModel(private val pref: UserPreference) : ViewModel() {
             }
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 Log.e(TAG, "onFailure (OF): ${t.message.toString()}")
+                _isLoading.value = false
             }
         })
     }

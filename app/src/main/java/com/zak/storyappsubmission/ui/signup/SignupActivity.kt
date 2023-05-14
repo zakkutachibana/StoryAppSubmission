@@ -1,9 +1,12 @@
 package com.zak.storyappsubmission.ui.signup
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
@@ -16,7 +19,7 @@ import com.zak.storyappsubmission.UserPreference
 import com.zak.storyappsubmission.ViewModelFactory
 import com.zak.storyappsubmission.databinding.ActivitySignupBinding
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 class SignupActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
     private lateinit var signupViewModel: SignupViewModel
@@ -29,6 +32,7 @@ class SignupActivity : AppCompatActivity() {
         setView()
         setViewModel()
         setAction()
+        setAnimation()
     }
     private fun setView() {
         @Suppress("DEPRECATION")
@@ -59,6 +63,10 @@ class SignupActivity : AppCompatActivity() {
                 Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
             }
         }
+
+        signupViewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
     }
 
 
@@ -86,6 +94,40 @@ class SignupActivity : AppCompatActivity() {
                     signupViewModel.postRegister(name, email, password)
                 }
             }
+        }
+    }
+    private fun setAnimation() {
+        ObjectAnimator.ofFloat(binding.imageView, View.TRANSLATION_X, -30f, 30f).apply {
+            duration = 4000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }.start()
+
+        val title =
+            ObjectAnimator.ofFloat(binding.tvTitle, View.ALPHA, 1f).setDuration(250)
+        val name =
+            ObjectAnimator.ofFloat(binding.layoutRegisterName, View.ALPHA, 1f).setDuration(250)
+        val email =
+            ObjectAnimator.ofFloat(binding.layoutRegisterEmail, View.ALPHA, 1f).setDuration(250)
+        val password =
+            ObjectAnimator.ofFloat(binding.layoutRegisterPassword, View.ALPHA, 1f).setDuration(250)
+        val signIn = ObjectAnimator.ofFloat(binding.customButton, View.ALPHA, 1f).setDuration(250)
+        val signInMessage =
+            ObjectAnimator.ofFloat(binding.tvToLogin, View.ALPHA, 1f).setDuration(250)
+
+        AnimatorSet().apply {
+            playSequentially(
+                title, name, email, password, signIn, signInMessage
+            )
+            startDelay = 500
+            start()
+        }
+    }
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
         }
     }
 }

@@ -14,4 +14,13 @@
     <string name="ok">OK</string>
     <string name="success_registration">Registrasi Berhasil!</string>
     <string name="greeting">Halo, %1$s !</string>
+    <string name="logout">Logout</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tv_to_register">Belum punya Akun? Daftar disini</string>
+    <string name="welcome">Selamat Datang! Silahkan Login</string>
+    <string name="register">Daftarkan Akun Anda!</string>
+    <string name="username">Username</string>
+    <string name="upload_date">Upload date</string>
+    <string name="description">description</string>
 </resources>

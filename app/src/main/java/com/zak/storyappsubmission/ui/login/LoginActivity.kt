@@ -1,10 +1,13 @@
 package com.zak.storyappsubmission.ui.login
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
@@ -32,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
         setView()
         setAction()
         setViewModel()
+        setAnimation()
     }
     private fun setView() {
         @Suppress("DEPRECATION")
@@ -66,12 +70,17 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
+                finish()
             }
         }
         loginViewModel.error.observe(this) {
             if (it.isNotEmpty()) {
                 Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
             }
+        }
+
+        loginViewModel.isLoading.observe(this) {
+            showLoading(it)
         }
     }
 
@@ -95,6 +104,38 @@ class LoginActivity : AppCompatActivity() {
                     loginViewModel.postLogin(email, password)
                 }
             }
+        }
+    }
+    private fun setAnimation() {
+        ObjectAnimator.ofFloat(binding.imageView, View.TRANSLATION_X, -30f, 30f).apply {
+            duration = 4000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }.start()
+
+        val title =
+            ObjectAnimator.ofFloat(binding.tvTitle, View.ALPHA, 1f).setDuration(250)
+        val email =
+            ObjectAnimator.ofFloat(binding.layoutLoginEmail, View.ALPHA, 1f).setDuration(250)
+        val password =
+            ObjectAnimator.ofFloat(binding.layoutLoginPassword, View.ALPHA, 1f).setDuration(250)
+        val signIn = ObjectAnimator.ofFloat(binding.customButton, View.ALPHA, 1f).setDuration(250)
+        val signUpMessage =
+            ObjectAnimator.ofFloat(binding.tvToSignup, View.ALPHA, 1f).setDuration(250)
+
+        AnimatorSet().apply {
+            playSequentially(
+                title, email, password, signIn, signUpMessage
+            )
+            startDelay = 500
+            start()
+        }
+    }
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
         }
     }
 }
