@@ -55,7 +55,6 @@
                 tools:layout_editor_absoluteX="63dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_login_password"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -114,7 +113,8 @@
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             android:visibility="gone"
-            android:elevation="4dp"
             />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -2,6 +2,7 @@ package com.zak.storyappsubmission
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.zak.storyappsubmission.ui.add.AddViewModel
 
 import com.zak.storyappsubmission.ui.login.LoginViewModel
 import com.zak.storyappsubmission.ui.main.MainViewModel
@@ -19,6 +20,9 @@ class ViewModelFactory(private val pref: UserPreference) : ViewModelProvider.New
             }
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(pref) as T
+            }
+            modelClass.isAssignableFrom(AddViewModel::class.java) -> {
+                AddViewModel(pref) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

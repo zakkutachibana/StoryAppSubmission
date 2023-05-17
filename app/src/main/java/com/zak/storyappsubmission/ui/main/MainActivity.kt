@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityOptionsCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -16,7 +17,10 @@ import com.zak.storyappsubmission.R
 import com.zak.storyappsubmission.UserPreference
 import com.zak.storyappsubmission.ViewModelFactory
 import com.zak.storyappsubmission.databinding.ActivityMainBinding
+import com.zak.storyappsubmission.ui.add.AddActivity
+import com.zak.storyappsubmission.ui.camera.CameraActivity
 import com.zak.storyappsubmission.ui.login.LoginActivity
+import com.zak.storyappsubmission.ui.signup.SignupActivity
 import com.zak.storyappsubmission.ui.story.StoryFragment
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -34,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         setView()
         setViewModel()
+        setAction()
     }
 
     private fun setView() {
@@ -71,8 +76,15 @@ class MainActivity : AppCompatActivity() {
                 finish()
             }
         }
-
     }
+
+    private fun setAction() {
+        binding.fabAdd.setOnClickListener {
+            val intent = Intent(this, AddActivity::class.java)
+            startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this).toBundle())
+        }
+    }
+
 
     fun getToken() = token
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

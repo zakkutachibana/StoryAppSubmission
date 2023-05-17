@@ -22,5 +22,9 @@
     <string name="register">Daftarkan Akun Anda!</string>
     <string name="username">Username</string>
     <string name="upload_date">Upload date</string>
-    <string name="description">description</string>
+    <string name="description">Description</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">gallery</string>
+    <string name="upload">upload</string>
+    <string name="upload_warning">Masukkan berkas gambar terlebih dahulu!</string>
 </resources>

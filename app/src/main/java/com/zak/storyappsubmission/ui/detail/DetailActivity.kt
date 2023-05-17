@@ -10,6 +10,7 @@ import com.zak.storyappsubmission.R
 import com.zak.storyappsubmission.databinding.ActivityDetailBinding
 import com.zak.storyappsubmission.databinding.ActivityMainBinding
 import com.zak.storyappsubmission.response.ListStoryItem
+import com.zak.storyappsubmission.withDateFormat
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
@@ -48,7 +49,7 @@ class DetailActivity : AppCompatActivity() {
                 .into(binding.ivDetail)
             binding.tvUsername.text = story.name
             binding.tvDescription.text = story.description
-            binding.tvUploadDate.text = story.createdAt
+            binding.tvUploadDate.text = story.createdAt.withDateFormat()
         }
     }
 }

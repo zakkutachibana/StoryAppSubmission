@@ -30,7 +30,7 @@ class StoryAdapter(private val listStory: ArrayList<ListStoryItem>) :
 
     override fun onBindViewHolder(holder: StoryViewHolder, position: Int) {
         holder.tvUser.text = listStory[position].name
-        holder.tvUpload.text = listStory[position].createdAt
+        holder.tvUpload.text = listStory[position].createdAt.withDateFormat()
         Glide.with(holder.ivUser)
             .load(listStory[position].photoUrl)
             .into(holder.ivUser)
