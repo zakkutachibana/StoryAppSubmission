@@ -65,6 +65,7 @@ class LoginActivity : AppCompatActivity() {
                 )
             }
         }
+
         loginViewModel.loginStatus.observe(this) {
             if (!it.error!!) {
                 Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()

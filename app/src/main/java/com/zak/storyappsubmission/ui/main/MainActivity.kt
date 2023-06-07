@@ -18,9 +18,8 @@ import com.zak.storyappsubmission.UserPreference
 import com.zak.storyappsubmission.ViewModelFactory
 import com.zak.storyappsubmission.databinding.ActivityMainBinding
 import com.zak.storyappsubmission.ui.add.AddActivity
-import com.zak.storyappsubmission.ui.camera.CameraActivity
 import com.zak.storyappsubmission.ui.login.LoginActivity
-import com.zak.storyappsubmission.ui.signup.SignupActivity
+import com.zak.storyappsubmission.ui.map.MapsActivity
 import com.zak.storyappsubmission.ui.story.StoryFragment
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -39,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         setView()
         setViewModel()
         setAction()
+//        getStoryViewModel()
     }
 
     private fun setView() {
@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity() {
             getToken()
         }
 
+
         mainViewModel.getUser().observe(this) { user ->
             if (user.isLogin) {
                 supportActionBar?.show()
@@ -78,15 +79,28 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun getToken() = token
     private fun setAction() {
         binding.fabAdd.setOnClickListener {
             val intent = Intent(this, AddActivity::class.java)
-            startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this).toBundle())
+            startActivity(
+                intent,
+                ActivityOptionsCompat.makeSceneTransitionAnimation(this).toBundle()
+            )
         }
     }
 
+//    fun getStoryViewModel(): StoryPagerViewModel {
+//        val viewModel: StoryPagerViewModel by viewModels {
+//            StoryViewModel.ViewModelStoryFactory(
+//                this,
+//                ApiConfig.getApiService(),
+//                token
+//            )
+//        }
+//        return viewModel
+//    }
 
-    fun getToken() = token
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.option_menu, menu)
@@ -108,6 +122,13 @@ class MainActivity : AppCompatActivity() {
                     show()
                 }
                 return true
+            }
+            R.id.map -> {
+                val intent = Intent(this, MapsActivity::class.java)
+                startActivity(
+                    intent,
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(this).toBundle()
+                )
             }
         }
         return true

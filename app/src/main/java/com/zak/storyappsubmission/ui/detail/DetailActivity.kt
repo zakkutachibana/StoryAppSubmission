@@ -8,14 +8,15 @@ import android.view.WindowManager
 import com.bumptech.glide.Glide
 import com.zak.storyappsubmission.R
 import com.zak.storyappsubmission.databinding.ActivityDetailBinding
-import com.zak.storyappsubmission.databinding.ActivityMainBinding
-import com.zak.storyappsubmission.response.ListStoryItem
 import com.zak.storyappsubmission.withDateFormat
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
     companion object {
-        const val EXTRA_STORY = "extra_story"
+        const val EXTRA_NAME = "extra_name"
+        const val EXTRA_DESC = "extra_desc"
+        const val EXTRA_IMG = "extra_img"
+        const val EXTRA_UPLOAD = "extra_upload"
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,12 +28,13 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setView() {
-        val story = if (Build.VERSION.SDK_INT >= 33) {
-            intent.getParcelableExtra(EXTRA_STORY, ListStoryItem::class.java)
-        } else {
-            @Suppress("DEPRECATION")
-            intent.getParcelableExtra(EXTRA_STORY)
-        }
+        val name = intent.getStringExtra(EXTRA_NAME)
+        val desc = intent.getStringExtra(EXTRA_DESC)
+        val img = intent.getStringExtra(EXTRA_IMG)
+        val date = intent.getStringExtra(EXTRA_UPLOAD)
+
+
+
         @Suppress("DEPRECATION")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
@@ -42,14 +44,15 @@ class DetailActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
-        if (story != null) {
-            supportActionBar?.title = story.id
+            supportActionBar?.hide()
             Glide.with(binding.ivDetail)
-                .load(story.photoUrl)
+                .load(img)
                 .into(binding.ivDetail)
-            binding.tvUsername.text = story.name
-            binding.tvDescription.text = story.description
-            binding.tvUploadDate.text = story.createdAt.withDateFormat()
+            binding.tvUsername.text = name
+            binding.tvDescription.text = desc
+        if (date != null) {
+            binding.tvUploadDate.text = date.withDateFormat()
         }
+
     }
 }

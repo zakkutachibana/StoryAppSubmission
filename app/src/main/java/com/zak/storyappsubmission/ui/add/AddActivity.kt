@@ -8,19 +8,21 @@ import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.zak.storyappsubmission.*
 import com.zak.storyappsubmission.databinding.ActivityAddBinding
 import com.zak.storyappsubmission.ui.camera.CameraActivity
@@ -38,10 +40,12 @@ class AddActivity : AppCompatActivity() {
     private lateinit var addViewModel: AddViewModel
     private var getFile: File? = null
     private var token = ""
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     companion object {
         const val CAMERA_X_RESULT = 200
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+        private val REQUIRED_PERMISSIONS = arrayOf(
+            Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSIONS = 10
     }
     override fun onRequestPermissionsResult(
@@ -71,6 +75,8 @@ class AddActivity : AppCompatActivity() {
         binding = ActivityAddBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
         if (!allPermissionsGranted()) {
             ActivityCompat.requestPermissions(
                 this,
@@ -82,7 +88,58 @@ class AddActivity : AppCompatActivity() {
         setView()
         setViewModel()
         setAction()
+        getMyLastLocation()
     }
+
+    private fun checkPermission(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this,
+            permission
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false -> {
+                    // Precise location access granted.
+                    getMyLastLocation()
+                }
+                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false -> {
+                    // Only approximate location access granted.
+                    getMyLastLocation()
+                }
+                else -> {
+                    // No location access granted.
+                }
+            }
+        }
+
+    private fun getMyLastLocation() {
+        if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) &&
+            checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+        ) {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                /* if user location fetched -> add marker & trigger input to user location */
+                location?.let {
+                    addViewModel.latitude.postValue(it.latitude)
+                    addViewModel.longitude.postValue(it.longitude)
+                    binding.tvCurrentLat.text = it.latitude.toString()
+                    binding.tvCurrentLng.text = it.longitude.toString()
+                }
+            }
+        } else {
+            requestPermissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            )
+        }
+    }
+
 
     private fun setView() {
         @Suppress("DEPRECATION")
@@ -95,6 +152,7 @@ class AddActivity : AppCompatActivity() {
             )
         }
         supportActionBar?.hide()
+
     }
     private fun setViewModel() {
         addViewModel = ViewModelProvider(
@@ -160,7 +218,11 @@ class AddActivity : AppCompatActivity() {
                 mFile.name,
                 requestImageFile
             )
-            addViewModel.postStory("Bearer $token", imageMultipart, description)
+            val lat = addViewModel.latitude.value
+            val lng = addViewModel.longitude.value
+            if (lat != null && lng != null) {
+                addViewModel.postStory("Bearer $token", imageMultipart, description, lat, lng)
+            }
         } else {
             Toast.makeText(this, getString(R.string.upload_warning), Toast.LENGTH_SHORT).show()
         }
@@ -196,6 +258,8 @@ class AddActivity : AppCompatActivity() {
             }
         }
     }
+
+
     private fun showLoading(isLoading: Boolean) {
         if (isLoading) {
             binding.progressBar.visibility = View.VISIBLE

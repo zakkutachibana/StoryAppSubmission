@@ -15,15 +15,6 @@
         tools:layout_editor_absoluteX="50dp"
         tools:layout_editor_absoluteY="1dp"
         tools:listitem="@layout/item_story"/>
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/progress_bar"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_gravity="center"
-        app:lottie_rawRes="@raw/loading"
-        tools:lottie_rawRes="@null"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        android:elevation="4dp" />
+
 
 </FrameLayout>

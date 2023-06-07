@@ -6,6 +6,7 @@ import com.zak.storyappsubmission.ui.add.AddViewModel
 
 import com.zak.storyappsubmission.ui.login.LoginViewModel
 import com.zak.storyappsubmission.ui.main.MainViewModel
+import com.zak.storyappsubmission.ui.map.MapsViewModel
 import com.zak.storyappsubmission.ui.signup.SignupViewModel
 
 class ViewModelFactory(private val pref: UserPreference) : ViewModelProvider.NewInstanceFactory() {
@@ -23,6 +24,12 @@ class ViewModelFactory(private val pref: UserPreference) : ViewModelProvider.New
             }
             modelClass.isAssignableFrom(AddViewModel::class.java) -> {
                 AddViewModel(pref) as T
+            }
+            modelClass.isAssignableFrom(MapsViewModel::class.java) -> {
+                MapsViewModel(pref) as T
+            }
+            modelClass.isAssignableFrom(MapsViewModel::class.java) -> {
+                MapsViewModel(pref) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

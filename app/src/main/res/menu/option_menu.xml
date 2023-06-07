@@ -2,8 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/map"
+        android:icon="@drawable/ic_map"
+        android:title="@string/logout"
+        app:showAsAction="always"/>
+    <item
         android:id="@+id/logout"
         android:icon="@drawable/ic_logout"
         android:title="@string/logout"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 </menu>

@@ -24,12 +24,12 @@
     <ImageView
         android:id="@+id/previewImageView"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="250dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_gallery" />
+        android:src="@drawable/empty_image" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layout_login_email"
@@ -52,6 +52,28 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView"
             tools:layout_editor_absoluteX="63dp" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_current_lat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="latitude"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_current_lng"
+        app:layout_constraintTop_toBottomOf="@+id/layout_login_email" />
+
+    <TextView
+        android:id="@+id/tv_current_lng"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="longitude"
+        app:layout_constraintEnd_toStartOf="@+id/tv_current_lat"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_login_email" />
+
+
 
     <com.zak.storyappsubmission.customs.CustomButton
         android:id="@+id/galleryButton"

@@ -1,9 +1,8 @@
 package com.zak.storyappsubmission.response
 
-import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
-import kotlinx.parcelize.RawValue
 
 data class StoryResponse(
 
@@ -16,7 +15,7 @@ data class StoryResponse(
 	@field:SerializedName("message")
 	val message: String
 )
-@Parcelize
+@Entity(tableName = "story")
 data class ListStoryItem(
 
 	@field:SerializedName("photoUrl")
@@ -34,9 +33,12 @@ data class ListStoryItem(
 	@field:SerializedName("lon")
 	val lon: String? = null,
 
+	@PrimaryKey
 	@field:SerializedName("id")
 	val id: String,
 
 	@field:SerializedName("lat")
 	val lat: String? = null
-) : Parcelable
+)
+
+

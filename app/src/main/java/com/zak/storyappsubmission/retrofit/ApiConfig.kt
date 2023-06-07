@@ -1,6 +1,5 @@
-package com.zak.storyapp.retrofit
+package com.zak.storyappsubmission.retrofit
 
-import com.zak.storyappsubmission.retrofit.ApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

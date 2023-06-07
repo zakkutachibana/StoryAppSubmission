@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.zak.storyapp.retrofit.ApiConfig
+import com.zak.storyappsubmission.retrofit.ApiConfig
 import com.zak.storyappsubmission.UserModel
 import com.zak.storyappsubmission.UserPreference
 import com.zak.storyappsubmission.response.StatusResponse
@@ -29,13 +29,15 @@ class AddViewModel(private val pref: UserPreference) : ViewModel() {
 
     val error = MutableLiveData("")
 
+    val latitude = MutableLiveData(0.0)
+    val longitude = MutableLiveData(0.0)
     fun getUser(): LiveData<UserModel> {
         return pref.getUser().asLiveData()
     }
 
-    fun postStory(token: String, image: MultipartBody.Part, description: RequestBody) {
+    fun postStory(token: String, image: MultipartBody.Part, description: RequestBody, lat: Double, lng: Double) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().postStory(token, image, description)
+        val client = ApiConfig.getApiService().postStory(token, image, description, lat, lng)
         client.enqueue(object : Callback<StatusResponse> {
             override fun onResponse(call: Call<StatusResponse>, response: Response<StatusResponse>) {
                 _isLoading.value = false
