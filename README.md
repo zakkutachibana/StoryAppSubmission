@@ -5,11 +5,11 @@ Finished up to Submission 2 (Accepted)
 ## Project Screenshots
 |Register Page|Login Page|Home Page|
 |----|---|---|
-|<img src="https://github.com/zakkutachibana/StoryAppSubmission/assets/114344871/7b9b1e98-6da7-4e87-89de-023061e2d258" width="300" height="600">|<img src="https://github.com/zakkutachibana/StoryAppSubmission/assets/114344871/d719ebac-94af-4a4f-8aa6-e750a932fda2" width="300" height="600">|<img src="https://github.com/zakkutachibana/StoryAppSubmission/assets/114344871/fb1b0ca8-6b0c-446d-8e3d-400980b696e3" width="300" height="600">|
+|<img src="https://github.com/zakkutachibana/StoryAppSubmission/assets/114344871/7b9b1e98-6da7-4e87-89de-023061e2d258" width="250" height="500">|<img src="https://github.com/zakkutachibana/StoryAppSubmission/assets/114344871/d719ebac-94af-4a4f-8aa6-e750a932fda2" width="250" height="500">|<img src="https://github.com/zakkutachibana/StoryAppSubmission/assets/114344871/fb1b0ca8-6b0c-446d-8e3d-400980b696e3" width="250" height="500">|
 
 |Detail Page|Add Page|Maps Page|
 |----|---|---|
-|<img src="https://github.com/zakkutachibana/StoryAppSubmission/assets/114344871/23b8134f-9773-435d-9a47-da0c824d7d13" width="300" height="600">|<img src="https://github.com/zakkutachibana/StoryAppSubmission/assets/114344871/2125c900-636b-4650-9265-6a6cb8a926c2" width="300" height="600">|<img src="https://github.com/zakkutachibana/StoryAppSubmission/assets/114344871/51ef6a13-53f7-4680-bfd3-186ff6880708" width="300" height="600">|
+|<img src="https://github.com/zakkutachibana/StoryAppSubmission/assets/114344871/23b8134f-9773-435d-9a47-da0c824d7d13" width="250" height="500">|<img src="https://github.com/zakkutachibana/StoryAppSubmission/assets/114344871/2125c900-636b-4650-9265-6a6cb8a926c2" width="250" height="500">|<img src="https://github.com/zakkutachibana/StoryAppSubmission/assets/114344871/51ef6a13-53f7-4680-bfd3-186ff6880708" width="250" height="500">|
 
 ## Features
 ### Submission 1 Features:
