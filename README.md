@@ -1,5 +1,5 @@
 # StoryAppSubmission
-## Desctiption
+## Description
 Submission for [Belajar Pengembangan Aplikasi Android Intermediate](https://www.dicoding.com/academies/352) on Dicoding.  
 Finished up to Submission 2 (Accepted)
 ## Project Screenshots
